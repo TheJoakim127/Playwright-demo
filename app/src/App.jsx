@@ -2,54 +2,45 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    JSON.parse(localStorage.getItem("isAuthenticated")) || false
+  );
+
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
 
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   });
 
-  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Load saved auth + tasks on startup
-  useEffect(() => {
-    const savedAuth = localStorage.getItem("isAuthenticated");
-    const savedTasks = localStorage.getItem("tasks");
-
-    if (savedAuth === "true") {
-      setIsAuthenticated(true);
-    }
-
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
-    }
-  }, []);
-
-  // Save tasks whenever tasks change
+  // Save tasks to localStorage
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   // Save auth state
   useEffect(() => {
-    localStorage.setItem("isAuthenticated", isAuthenticated);
+    localStorage.setItem(
+      "isAuthenticated",
+      JSON.stringify(isAuthenticated)
+    );
   }, [isAuthenticated]);
 
-  // Fake API Login
+  // Fake Login API
   const fakeLoginApi = (username, password) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (username === "admin" && password === "password") {
-          resolve({
-            success: true,
-            token: "fake-jwt-token",
-          });
+          resolve(true);
         } else {
           reject("Invalid credentials");
         }
-      }, 1200);
+      }, 1000);
     });
   };
 
@@ -59,7 +50,10 @@ export default function App() {
     setLoading(true);
 
     try {
-      await fakeLoginApi(loginForm.username, loginForm.password);
+      await fakeLoginApi(
+        loginForm.username,
+        loginForm.password
+      );
 
       setIsAuthenticated(true);
     } catch (error) {
@@ -69,27 +63,31 @@ export default function App() {
     }
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
   const handleAddTask = () => {
     if (!newTask.trim()) return;
 
-    const createdTask = {
+    const task = {
       id: Date.now(),
       title: newTask,
       completed: false,
     };
 
-    setTasks((prev) => [...prev, createdTask]);
+    setTasks([...tasks, task]);
 
     setNewTask("");
   };
 
   const handleDeleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   const toggleTask = (id) => {
-    setTasks((prev) =>
-      prev.map((task) =>
+    setTasks(
+      tasks.map((task) =>
         task.id === id
           ? {
               ...task,
@@ -98,15 +96,6 @@ export default function App() {
           : task
       )
     );
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-
-    setLoginForm({
-      username: "",
-      password: "",
-    });
   };
 
   return (
@@ -160,7 +149,9 @@ export default function App() {
           <div className="header">
             <h2>Your Tasks</h2>
 
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}>
+              Logout
+            </button>
           </div>
 
           <div className="task-input">
@@ -168,7 +159,9 @@ export default function App() {
               type="text"
               placeholder="Add new task..."
               value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
+              onChange={(e) =>
+                setNewTask(e.target.value)
+              }
             />
 
             <button onClick={handleAddTask}>
@@ -186,13 +179,19 @@ export default function App() {
                   <input
                     type="checkbox"
                     checked={task.completed}
-                    onChange={() => toggleTask(task.id)}
+                    onChange={() =>
+                      toggleTask(task.id)
+                    }
                   />
 
                   <span>{task.title}</span>
                 </div>
 
-                <button onClick={() => handleDeleteTask(task.id)}>
+                <button
+                  onClick={() =>
+                    handleDeleteTask(task.id)
+                  }
+                >
                   Delete
                 </button>
               </li>
