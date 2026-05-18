@@ -28,4 +28,3 @@ test('login test', async ({ page }) => {
   await expect(page.getByText('admin')).toBeVisible();
   await expect(page.getByText('password')).toBeVisible();
 });
-
