@@ -21,3 +21,10 @@ test('test', async ({ page }) => {
   await page.getByRole('checkbox').check();
   await page.getByRole('checkbox').check();
 });
+
+test('login test', async ({ page }) => {
+  await page.goto('http://localhost:5173');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page.getByText('admin')).toBeVisible();
+  await expect(page.getByText('password')).toBeVisible();
+});
