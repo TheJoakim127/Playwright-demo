@@ -29,6 +29,7 @@ await page.goto('/');
   await page.locator('button').nth(3).click();
   await page.locator('button').nth(4).click();
   // Delete task using index
+  
   await page.locator('button').nth(6).click();
 });
 
