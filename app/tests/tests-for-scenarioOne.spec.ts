@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 
 test('scenario one - version one', async ({ page }) => {
 await page.goto('/');
-  // Bad manual waits
   await page.waitForTimeout(1000);
   // Weak selectors
   await page.locator('input').nth(0).fill('admin');
@@ -26,7 +25,7 @@ await page.goto('/');
   await page.locator('input[type="checkbox"]').nth(0).check();
   // Clicking buttons by index = very flaky
   await page.locator('button').nth(2).click();
-  
+
   await page.locator('button').nth(3).click();
   await page.locator('button').nth(4).click();
 
