@@ -26,10 +26,11 @@ await page.goto('/');
   await page.locator('input[type="checkbox"]').nth(0).check();
   // Clicking buttons by index = very flaky
   await page.locator('button').nth(2).click();
+  
   await page.locator('button').nth(3).click();
   await page.locator('button').nth(4).click();
+
   // Delete task using index
-  
   await page.locator('button').nth(6).click();
 });
 
