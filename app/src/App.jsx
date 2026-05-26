@@ -75,31 +75,32 @@ export default function App() {
     setIsAuthenticated(false); 
   }; 
  
-  const handleAddTask = async () => { 
-    if (!newTask.trim()) { 
-      setErrorMessage("Task cannot be empty"); 
-      return; 
-    } 
- 
-    setTaskLoading(true); 
-    setErrorMessage(""); 
- 
-    await new Promise((resolve) => 
-      setTimeout(resolve, 1500) 
-    ); 
- 
-    const task = { 
-      id: Date.now(), 
-      title: newTask, 
-      completed: false, 
-    }; 
- 
-    setTasks([...tasks, task]); 
- 
-    setNewTask(""); 
- 
-    setTaskLoading(false); 
-  }; 
+const handleAddTask = async () => {
+  if (!newTask.trim()) {
+    setErrorMessage("Task cannot be empty");
+    return;
+  }
+
+  setTaskLoading(true);
+  setErrorMessage("");
+
+  // Random async delay
+  await new Promise((resolve) =>
+    setTimeout(resolve, Math.random() * 3000)
+  );
+
+  const task = {
+    id: Date.now(),
+    title: newTask,
+    completed: false,
+  };
+
+  setTasks([...tasks, task]);
+
+  setNewTask("");
+
+  setTaskLoading(false);
+};
  
   const handleDeleteTask = (id) => { 
     setTasks(tasks.filter((task) => task.id !== id)); 
