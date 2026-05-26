@@ -209,52 +209,33 @@ test('scenario one - flaky version 8', async ({ page }) => {
 
 test('scenario one - flaky version 9', async ({ page }) => {
   await page.goto('/');
-
   await page.waitForTimeout(1100);
-
   await page.locator('input').nth(0).fill('admin');
-
   await page.waitForTimeout(300);
-
   await page.locator('input').nth(1).fill('password');
-
   await page.locator('button').nth(0).click();
-
   await page.waitForTimeout(1800);
-
   await page.locator('input').nth(0).fill('Team meeting');
   await page.locator('button').nth(1).click();
-
   await page.locator('input').nth(0).fill('Update project');
   await page.locator('button').nth(1).click();
-
   await page.locator('button').nth(2).click();
-
   await page.locator('button').nth(4).click();
 });
 
 
 test('scenario one - flaky version 10', async ({ page }) => {
   await page.goto('/');
-
   await page.waitForTimeout(600);
-
   await page.locator('input').first().fill('admin');
   await page.locator('input').nth(1).fill('password');
-
   await page.waitForTimeout(400);
-
   await page.locator('button').nth(0).click();
-
   await page.waitForTimeout(2500);
-
   await page.locator('input').first().fill('Watch movie');
   await page.locator('button').nth(1).click();
-
   await page.locator('input').first().fill('Morning run');
   await page.locator('button').nth(1).click();
-
   await page.locator('input[type="checkbox"]').nth(1).check();
-
   await page.locator('button').nth(5).click();
 });
