@@ -66,12 +66,13 @@ test('scenario one - flaky version 3', async ({ page }) => {
   await page.locator('input').nth(0).fill('Workout');
   await page.locator('button').nth(1).click();
 
-  await page.waitForTimeout(200);
+  await page.waitForTimeout(5200);
 
   await page.locator('input').nth(0).fill('Cook dinner');
   await page.locator('button').nth(1).click();
 
   await page.locator('button').nth(3).click();
+   await page.waitForTimeout(4200);
 });
 
 
