@@ -74,21 +74,16 @@ test('scenario one - flaky version 3', async ({ page }) => {
 
 test('scenario one - flaky version 4', async ({ page }) => {
   await page.goto('/');
-
   await page.locator('input').nth(0).fill('admin');
-
   await page.locator('input').nth(1).fill('password');
-
   await page.locator('button').nth(0).click();
-
   await page.locator('input').nth(0).fill('Buy groceries');
+  await page.waitForTimeout(500);
   await page.locator('button').nth(1).click();
-
   await page.locator('input').nth(0).fill('Wash car');
   await page.locator('button').nth(1).click();
-
   await page.locator('button').nth(3).click();
-  
+  await page.waitForTimeout(700);
   await expect(page.getByText('Wash car')).toBeVisible();
 });
 
