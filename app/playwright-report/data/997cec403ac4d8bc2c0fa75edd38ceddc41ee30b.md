@@ -6,22 +6,22 @@
 
 # Test info
 
-- Name: tests-for-scenarioOne.spec.ts >> scenario one - flaky version 10
-- Location: tests\tests-for-scenarioOne.spec.ts:224:1
+- Name: tests-for-scenarioOne.spec.ts >> scenario one - flaky version 9
+- Location: app\tests\tests-for-scenarioOne.spec.ts:206:1
 
 # Error details
 
 ```
 Error: expect(locator).toBeVisible() failed
 
-Locator: getByText('Morning run')
+Locator: getByText('Team meeting')
 Expected: visible
 Timeout: 5000ms
 Error: element(s) not found
 
 Call log:
   - Expect "toBeVisible" with timeout 5000ms
-  - waiting for getByText('Morning run')
+  - waiting for getByText('Team meeting')
 
 ```
 
@@ -31,17 +31,47 @@ Call log:
 - button "Logout"
 - textbox "Add new task..."
 - button "Add"
-- paragraph: Task cannot be empty
 - button "All"
 - button "Active"
 - button "Completed"
-- list
-- paragraph: No tasks available.
+- list:
+  - listitem:
+    - checkbox
+    - text: Update project
+    - button "Edit"
+    - button "Delete"
 ```
 
 # Test source
 
 ```ts
+  119 |   await page.locator('button').nth(2).click();
+  120 | 
+  121 |   await page.locator('button').nth(6).click();
+  122 | 
+  123 |   await expect(page.getByText('Read book')).toBeVisible();
+  124 | });
+  125 | 
+  126 | 
+  127 | test('scenario one - flaky version 6', async ({ page }) => {
+  128 |   await page.goto('/');
+  129 | 
+  130 |   await page.locator('input').first().fill('admin');
+  131 | 
+  132 |   await page.waitForTimeout(60);
+  133 | 
+  134 |   await page.locator('input').nth(1).fill('password');
+  135 | 
+  136 |   await page.locator('button').first().click();
+  137 | 
+  138 |   await page.waitForTimeout(220);
+  139 | 
+  140 |   await page.locator('input').first().fill('Gaming');
+  141 |   await page.locator('button').nth(1).click();
+  142 | 
+  143 |   await page.locator('input').first().fill('Meditation');
+  144 |   await page.locator('button').nth(1).click();
+  145 | 
   146 |   await page.locator('input[type="checkbox"]').first().check();
   147 | 
   148 |   await page.locator('button').nth(4).click();
@@ -115,7 +145,8 @@ Call log:
   216 |   await page.locator('input').nth(0).fill('Update project');
   217 |   await page.locator('button').nth(1).click();
   218 |   await page.locator('button').nth(2).click();
-  219 |   await expect(page.getByText('Team meeting')).toBeVisible();
+> 219 |   await expect(page.getByText('Team meeting')).toBeVisible();
+      |                                                ^ Error: expect(locator).toBeVisible() failed
   220 | 
   221 | });
   222 | 
@@ -142,8 +173,7 @@ Call log:
   243 | 
   244 |   await page.locator('button').nth(6).click();
   245 | 
-> 246 |   await expect(page.getByText('Morning run')).toBeVisible();
-      |                                               ^ Error: expect(locator).toBeVisible() failed
+  246 |   await expect(page.getByText('Morning run')).toBeVisible();
   247 | });
   248 | 
 ```

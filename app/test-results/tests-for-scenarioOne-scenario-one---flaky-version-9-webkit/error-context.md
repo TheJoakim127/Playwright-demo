@@ -7,7 +7,7 @@
 # Test info
 
 - Name: tests-for-scenarioOne.spec.ts >> scenario one - flaky version 9
-- Location: tests\tests-for-scenarioOne.spec.ts:206:1
+- Location: app\tests\tests-for-scenarioOne.spec.ts:206:1
 
 # Error details
 
